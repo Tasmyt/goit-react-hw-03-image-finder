@@ -47,8 +47,10 @@ export class ImageGallery extends Component {
     const nextPage = this.state.page;
 
     if (prevSearch !== nextSearch || prevPage !== nextPage) {
-      this.setState({ status: Status.PENDING,  });
-      GetQuery(nextSearch, this.state.page)
+      this.setState({ status: Status.PENDING, });
+      // Роблю запит
+      GetQuery(nextSearch, this.state.page)  
+        // Шукаю абракадабру при запиті і прокидую помилку у catch
         .then(images =>
           {if (images.hits.length === 0) {
          return Promise.reject(new Error());
@@ -59,7 +61,8 @@ export class ImageGallery extends Component {
             status: Status.RESOLVED,
             error: null
           })}
-        )
+      )
+        // Змінюю статус 
         .catch(error => this.setState({ error, status: Status.REJECTED }))
       
     }
@@ -77,7 +80,7 @@ export class ImageGallery extends Component {
     if (status === 'pending') {
       return <Loader />;
     }
-
+    // Рендерю помилку
     if (status === 'rejected') {
       toast.error('Нажаль ми не змогли знайти такі зображення');
       

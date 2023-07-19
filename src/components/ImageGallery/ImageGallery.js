@@ -15,7 +15,6 @@ const Status = {
   IDLE: 'idle',
   PENDING: 'pending',
   RESOLVED: 'resolved',
-  REJECTED: 'rejected',
 };
 export class ImageGallery extends Component {
   state = {
@@ -47,31 +46,26 @@ export class ImageGallery extends Component {
     const nextPage = this.state.page;
 
     if (prevSearch !== nextSearch || prevPage !== nextPage) {
-      this.setState({ status: Status.PENDING, });
-      // Роблю запит
-      GetQuery(nextSearch, this.state.page)  
-        // Шукаю абракадабру при запиті і прокидую помилку у catch
-        .then(images =>
-          {if (images.hits.length === 0) {
-         return Promise.reject(new Error());
-        }
+      this.setState({ status: Status.PENDING });
+
+      GetQuery(nextSearch, this.state.page)
+        .then(images => {
+          if (images.hits.length === 0) {
+            return Promise.reject(new Error());
+          }
           this.setState({
             images: [...images.hits],
             total: images.total,
             status: Status.RESOLVED,
-            error: null
-          })}
-      )
-        // Змінюю статус 
-        .catch(error => this.setState({ error, status: Status.REJECTED }))
-      
+            error: null,
+          });
+        })
+        .catch(() => toast.error('Нажаль ми не змогли знайти такі зображення'));
     }
   }
 
- 
   render() {
-    const { images, status, showModal, largeImageURL, tags } =
-      this.state;
+    const { images, status, showModal, largeImageURL, tags } = this.state;
 
     if (status === 'idle') {
       return <Loading>Які зображення ви хочете знайти?</Loading>;
@@ -80,12 +74,7 @@ export class ImageGallery extends Component {
     if (status === 'pending') {
       return <Loader />;
     }
-    // Рендерю помилку
-    if (status === 'rejected') {
-      toast.error('Нажаль ми не змогли знайти такі зображення');
-      
-    }
-    
+
     if (status === 'resolved')
       return (
         <>
@@ -112,5 +101,13 @@ export class ImageGallery extends Component {
 
 ImageGallery.protoTypes = {
   search: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    })
+  ),
+  onClick: PropTypes.func.isRequired,
 };
-

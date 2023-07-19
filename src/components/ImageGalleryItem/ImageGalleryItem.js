@@ -1,5 +1,5 @@
 import { LiImage, ItemImage } from './ImageGalleryItem.styled';
-
+import PropTypes from 'prop-types';
 export const ImageGalleryItem = ({images, largeModal}) => {
     
     return (
@@ -12,3 +12,8 @@ export const ImageGalleryItem = ({images, largeModal}) => {
     </>
     )
 }
+
+ImageGalleryItem.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.object).isRequired, 
+  largeModal: PropTypes.func,
+};

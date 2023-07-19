@@ -13,7 +13,6 @@ export class App extends Component {
   formSubmit = search => {
     this.setState({search});
 }
-
   render() {
     return (
       <div>

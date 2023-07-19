@@ -15,7 +15,6 @@ export const GetQuery = (nextSearch, page) => {
         if (response.ok) {
             return response.json();
         }
-
         return Promise.reject(new Error(`Сталася помилка: ${nextSearch}`));
     });
     

@@ -67,7 +67,7 @@ export class ImageGallery extends Component {
 
  
   render() {
-    const { images, error, status, showModal, largeImageURL, tags } =
+    const { images, status, showModal, largeImageURL, tags } =
       this.state;
 
     if (status === 'idle') {

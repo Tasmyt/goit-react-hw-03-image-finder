@@ -53,7 +53,6 @@ export class ImageGallery extends Component {
           {if (images.hits.length === 0) {
          return Promise.reject(new Error());
         }
-
           this.setState({
             images: [...images.hits],
             total: images.total,

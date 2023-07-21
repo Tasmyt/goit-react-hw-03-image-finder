@@ -17,14 +17,14 @@ componentWillUnmount() {
     }
   };
 
-    BackdropClick = e => {
+    backdropClick = e => {
         if (e.currentTarget === e.target) {
             this.props.closeModal();
         }
     }
 render()
 {
-    return createPortal(<Overlay onClick={this.BackdropClick}>
+    return createPortal(<Overlay onClick={this.backdropClick}>
             <ModalDiv >
                 {this.props.children}
             </ModalDiv>

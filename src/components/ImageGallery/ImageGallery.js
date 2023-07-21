@@ -30,6 +30,7 @@ export class ImageGallery extends Component {
 
   onPage = () => {
     this.setState(({ page }) => ({ page: page + 1 }));
+    
   };
 
   largeModal = largeImageURL => {
@@ -45,6 +46,8 @@ export class ImageGallery extends Component {
     const prevPage = prevState.page;
     const nextPage = this.state.page;
 
+    if (prevSearch !== nextSearch) {this.setState({ page: 1, images: [] });}
+
     if (prevSearch !== nextSearch || prevPage !== nextPage) {
       this.setState({ status: Status.PENDING });
 
@@ -53,12 +56,12 @@ export class ImageGallery extends Component {
           if (images.hits.length === 0) {
             return Promise.reject(new Error());
           }
-          this.setState({
-            images: [...images.hits],
+          this.setState(prevState => ({
+            images: [...prevState.images, ...images.hits],
             total: images.total,
             status: Status.RESOLVED,
             error: null,
-          });
+          }));
         })
         .catch(() => toast.error('Нажаль ми не змогли знайти такі зображення'));
     }
@@ -78,9 +81,10 @@ export class ImageGallery extends Component {
     if (status === 'resolved')
       return (
         <>
-          <Gallery>
-            <ImageGalleryItem images={images} largeModal={this.largeModal} />
-          </Gallery>
+          <Gallery>            
+            <ImageGalleryItem images={images} largeModal={this.largeModal} /> 
+            
+          </Gallery>          
           {this.state.total / 12 > this.state.page && (
             <Button onPage={this.onPage}></Button>
           )}

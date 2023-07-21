@@ -8,7 +8,7 @@ export const ImageGalleryItem = ({images, largeModal}) => {
               <LiImage key={item.id} onClick={(e)=>{largeModal(item.largeImageURL, item.tags);}}>
                 <ItemImage src={item.webformatURL} alt={item.tags} />
               </LiImage>
-            ))}
+      ))}        
     </>
     )
 }

@@ -25,7 +25,7 @@ export class ImageGallery extends Component {
     total: 1,
     showModal: false,
     largeImageURL: null,
-    tags: '',
+    tags: '',    
   };
 
   onPage = () => {
@@ -48,7 +48,7 @@ export class ImageGallery extends Component {
 
     if (prevSearch !== nextSearch) {this.setState({ page: 1, images: [] });}
 
-    if (prevSearch !== nextSearch || prevPage !== nextPage) {
+    if (prevSearch !== nextSearch  || prevPage !== nextPage) {
       this.setState({ status: Status.PENDING });
 
       GetQuery(nextSearch, this.state.page)
@@ -78,12 +78,11 @@ export class ImageGallery extends Component {
       return <Loader />;
     }
 
-    if (status === 'resolved')
+    // if (status === 'resolved')
       return (
         <>
           <Gallery>            
-            <ImageGalleryItem images={images} largeModal={this.largeModal} /> 
-            
+            <ImageGalleryItem images={images} largeModal={this.largeModal} />             
           </Gallery>          
           {this.state.total / 12 > this.state.page && (
             <Button onPage={this.onPage}></Button>

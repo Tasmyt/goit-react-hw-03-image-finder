@@ -70,17 +70,10 @@ export class ImageGallery extends Component {
   render() {
     const { images, status, showModal, largeImageURL, tags } = this.state;
 
-    if (status === 'idle') {
-      return <Loading>Які зображення ви хочете знайти?</Loading>;
-    }
-
-    if (status === 'pending') {
-      return <Loader />;
-    }
-
-    // if (status === 'resolved')
       return (
         <>
+          {status === 'idle' && (<Loading>Які зображення ви хочете знайти?</Loading>)}
+          {status === 'pending' && (<Loader />)}
           <Gallery>            
             <ImageGalleryItem images={images} largeModal={this.largeModal} />             
           </Gallery>          

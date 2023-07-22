@@ -17,6 +17,7 @@ export class App extends Component {
     return (
       <div>
         <Searchbar query={this.formSubmit} />
+        
         <ImageGallery search={this.state.search} />
          
         <ToastContainer  />

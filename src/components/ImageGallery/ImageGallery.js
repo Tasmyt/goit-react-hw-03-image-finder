@@ -54,7 +54,9 @@ export class ImageGallery extends Component {
       GetQuery(nextSearch, this.state.page)
         .then(images => {
           if (images.hits.length === 0) {
+            this.setState({ status: Status.IDLE });
             return Promise.reject(new Error());
+            
           }
           this.setState(prevState => ({
             images: [...prevState.images, ...images.hits],
@@ -74,12 +76,16 @@ export class ImageGallery extends Component {
         <>
           {status === 'idle' && (<Loading>Які зображення ви хочете знайти?</Loading>)}
           {status === 'pending' && (<Loader />)}
-          <Gallery>            
-            <ImageGalleryItem images={images} largeModal={this.largeModal} />             
-          </Gallery>          
-          {this.state.total / 12 > this.state.page && (
+          {status === 'resolved' &&
+            (<Gallery>
+              <ImageGalleryItem images={images} largeModal={this.largeModal} />
+            </Gallery>)
+          }
+          {status === 'resolved' && this.state.total / 12 > this.state.page && (
             <Button onPage={this.onPage}></Button>
           )}
+          
+        
           {showModal && (
             <Modal closeModal={this.largeModal}>
               <ModalDiv>

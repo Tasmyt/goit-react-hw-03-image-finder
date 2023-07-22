@@ -76,7 +76,7 @@ export class ImageGallery extends Component {
         <>
           {status === 'idle' && (<Loading>Які зображення ви хочете знайти?</Loading>)}
           {status === 'pending' && (<Loader />)}
-          {status === 'resolved' &&
+          {
             (<Gallery>
               <ImageGalleryItem images={images} largeModal={this.largeModal} />
             </Gallery>)

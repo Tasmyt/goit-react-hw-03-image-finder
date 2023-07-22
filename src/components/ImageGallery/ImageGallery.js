@@ -55,8 +55,7 @@ export class ImageGallery extends Component {
         .then(images => {
           if (images.hits.length === 0) {
             this.setState({ status: Status.IDLE });
-            return Promise.reject(new Error());
-            
+            return Promise.reject(new Error());            
           }
           this.setState(prevState => ({
             images: [...prevState.images, ...images.hits],

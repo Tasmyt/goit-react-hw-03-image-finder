@@ -75,16 +75,13 @@ export class ImageGallery extends Component {
       return (
         <>
           {status === 'idle' && (<Loading>Які зображення ви хочете знайти?</Loading>)}
-          {status === 'pending' && (<Loader />)}
-          {
+          {status === 'pending' && (<Loader />)}          
             (<Gallery>
               <ImageGalleryItem images={images} largeModal={this.largeModal} />
-            </Gallery>)
-          }
+            </Gallery>)          
           {status === 'resolved' && this.state.total / 12 > this.state.page && (
             <Button onPage={this.onPage}></Button>
-          )}
-          
+          )}          
         
           {showModal && (
             <Modal closeModal={this.largeModal}>

@@ -48,7 +48,7 @@ export class ImageGallery extends Component {
 
     if (prevSearch !== nextSearch) {this.setState({ page: 1, images: [] });}
 
-    if (prevSearch !== nextSearch  || prevPage !== nextPage) {
+    if ((prevSearch !== nextSearch && nextPage === 1)  || prevPage !== nextPage) {
       this.setState({ status: Status.PENDING });
 
       GetQuery(nextSearch, this.state.page)
@@ -73,11 +73,11 @@ export class ImageGallery extends Component {
 
       return (
         <>
-          {status === 'idle' && (<Loading>Які зображення ви хочете знайти?</Loading>)}
-          {status === 'pending' && (<Loader />)}          
+          {status === 'idle' && (<Loading>Які зображення ви хочете знайти?</Loading>)}                 
             (<Gallery>
               <ImageGalleryItem images={images} largeModal={this.largeModal} />
-            </Gallery>)          
+          </Gallery>) 
+        {status === 'pending' && (<Loader />)}   
           {status === 'resolved' && this.state.total / 12 > this.state.page && (
             <Button onPage={this.onPage}></Button>
           )}          
